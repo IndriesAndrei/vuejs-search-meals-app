@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import store from '../store';
+import YoutubeButton from '../components/YoutubeButton.vue';
 
 const keyword = ref('')
 const meals = computed(() => store.state.searchedMeals)
@@ -12,7 +13,7 @@ function searchMeals() {
 </script>
 
 <template>
-    <div class="p-8">
+    <div class="p-8 pb-0">
         <input 
             type="text"
             v-model="keyword" 
@@ -28,8 +29,13 @@ function searchMeals() {
             <div class="p-3">
                 <h3 class="font-semibold mb-4">{{ meal.strMeal }}</h3>
                 <div class="flex items-center">
-                    <a :href="meal.strYoutube" target="_blank" class="px-3 mr-2 py-2 rounded border-2 border-red-600 text-white bg-red-500 hover:bg-red-600">Youtube</a>
-                    <router-link to="/" class="px-3 py-2 rounded border-2 border-purple-600 text-white bg-purple-500 hover:bg-purple-600">View</router-link>
+                   <YoutubeButton :href="meal.strYoutube"/>
+                   <router-link 
+                       :to="{name: 'mealDetails', params: {id: meal.idMeal}}" 
+                       class="px-3 py-2 rounded border-2 border-purple-600 text-white bg-purple-500 hover:bg-purple-600"
+                   >
+                       View
+                   </router-link>
                 </div>
             </div>
         </div>
